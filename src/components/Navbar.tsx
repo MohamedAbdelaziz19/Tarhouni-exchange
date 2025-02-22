@@ -17,8 +17,8 @@ function Navbar() {
               <Image
                 src="/image/Tarhouni Logo Text PNG.png"
                 alt="Tarhouni Logo"
-                width={140}
-                height={140}
+                width={150}
+                height={150}
                 className="object-contain"
               />
             </a>
