@@ -23,22 +23,21 @@ const Footer = () => {
           </div>
 
           <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt consequuntur amet culpa cum
-            itaque neque.
+          Bureau de change à Teboulba agréé par la Banque Centrale de Tunisie
           </p>
 
           <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
             <li>
-              <a className="text-gray-700 transition hover:text-yellow-500" href="#"> About </a>
+              <a className="text-gray-700 transition hover:text-yellow-500" href="#about"> About </a>
             </li>
             <li>
-              <a className="text-gray-700 transition hover:text-yellow-500" href="#"> Service </a>
+              <a className="text-gray-700 transition hover:text-yellow-500" href="#service"> Service </a>
             </li>
             <li>
-              <a className="text-gray-700 transition hover:text-yellow-500" href="#"> Cours De Change </a>
+              <a className="text-gray-700 transition hover:text-yellow-500" href="#currencytable"> Cours De Change </a>
             </li>
             <li>
-              <a className="text-gray-700 transition hover:text-yellow-500" href="#"> Contact </a>
+              <a className="text-gray-700 transition hover:text-yellow-500" href="#contact"> Contact </a>
             </li>
           </ul>
 
@@ -47,7 +46,7 @@ const Footer = () => {
             {/* Facebook */}
             <li>
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61572907003005"
                 rel="noreferrer"
                 target="_blank"
                 className="text-gray-700 transition hover:text-yellow-500"
@@ -66,7 +65,7 @@ const Footer = () => {
             {/* Instagram */}
             <li>
               <a
-                href="#"
+                href="https://www.instagram.com/tarhouni.exchange/?fbclid=IwY2xjawIchtRleHRuA2FlbQIxMAABHWErKUtehJC6ncQo06Wkl-vVeeRN8JuXDhfDFP__NbyU4UtwuQKmZ267Cw_aem_u4-8fJvpb24QC2XNPjznYw"
                 rel="noreferrer"
                 target="_blank"
                 className="text-gray-700 transition hover:text-yellow-500"
@@ -84,7 +83,7 @@ const Footer = () => {
 
              {/* TikTok */}
              <li>
-              <a href="#" rel="noreferrer" target="_blank" className="text-gray-700 transition hover:text-yellow-500">
+              <a href="https://www.tiktok.com/@tarhouni_exchange?_t=ZM-8tuyNMUmaoh&_r=1&fbclid=IwY2xjawIchvVleHRuA2FlbQIxMAABHcTkQZtbn7_0OXZx2VQvVV3AGjKYXT-ErNg_AI68As8PlObjifohUDKMlg_aem_4VykQ8XzaScwbX9tIDyGMw" rel="noreferrer" target="_blank" className="text-gray-700 transition hover:text-yellow-500">
                 <span className="sr-only">TikTok</span>
                 <svg className="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10c0-.338-.008-.674-.024-1.008a7.002 7.002 0 003.508-1.992 7.003 7.003 0 01-2.015.552 3.5 3.5 0 001.536-1.93 6.973 6.973 0 01-2.208.844A3.487 3.487 0 0016.5 7.5c0 .277.031.548.09.808A9.939 9.939 0 015.25 5.5a3.5 3.5 0 001.08 4.675 3.462 3.462 0 01-1.58-.437v.045a3.5 3.5 0 002.81 3.42 3.48 3.48 0 01-1.574.06 3.5 3.5 0 003.271 2.437A7.006 7.006 0 014 17.419 9.949 9.949 0 0012 20c7.732 0 12-6.373 12-11.92 0-.182-.004-.362-.013-.54A8.499 8.499 0 0022 6.418a7.025 7.025 0 01-2 .55z" />

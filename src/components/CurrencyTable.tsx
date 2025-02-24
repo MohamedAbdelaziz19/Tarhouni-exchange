@@ -1,122 +1,101 @@
 "use client";
+import { useState, useEffect, useCallback } from "react";
 
-import React, { useEffect, useState } from "react";
-import "@next-languages/flags/style.css";
-import { flagMap } from "@/types/flagMap";
-import { getExchangeRates } from "@/../utils/api";
-import Image from "next/image";
-import Link from "next/link";
-
-interface Currency {
-  title: string;
+interface DeviseData {
+  id: string;
   code: string;
-  unit: number;
-  country: string;
+  nom: string;
+  unite: number;
+  achat: number;
+  vent: number;
+  createdAt: string;
 }
 
-const currencies: Currency[] = [
-  { title: "Euro", code: "EUR", unit: 1, country: "eu" },
-  { title: "Dollar des Etats-Unis", code: "USD", unit: 1, country: "us" },
-  { title: "Riyal saoudien", code: "SAR", unit: 10, country: "sa" },
-  { title: "Dollar canadien", code: "CAD", unit: 1, country: "ca" },
-  { title: "Dinar de Bahreïn", code: "BHD", unit: 1, country: "bh" },
-  { title: "Livre sterling", code: "GBP", unit: 1, country: "gb" },
-  { title: "Dinar koweïtien", code: "KWD", unit: 1, country: "kw" },
-  { title: "Yen", code: "JPY", unit: 1000, country: "jp" },
-  { title: "Yuan Ren-Min-Bi", code: "CNY", unit: 1, country: "cn" },
-  { title: "Dirham des Émirats Arabes Unis", code: "AED", unit: 10, country: "ae" },
-  { title: "Franc suisse", code: "CHF", unit: 10, country: "ch" },
-  { title: "Riyal du Qatar", code: "QAR", unit: 10, country: "qa" },
-];
-
 const CurrencyTable = () => {
-  const [rates, setRates] = useState<{ [code: string]: number }>({});
-  const [loading, setLoading] = useState(true);
-  const baseCurrency = "USD";
+  const [devises, setDevises] = useState<DeviseData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+
+  const fetchDevises = useCallback(async () => {
+    try {
+      const res = await fetch("/api/currencies");
+      if (!res.ok) {
+        throw new Error("Erreur lors de la récupération des devises");
+      }
+      const data = await res.json();
+      setDevises(data);
+    } catch {
+      console.error("Erreur lors du chargement");
+      setError("Erreur lors de la récupération des devises. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchRates = async () => {
-      try {
-        const fetchedRates = await getExchangeRates(baseCurrency);
-        setRates(fetchedRates);
-      } catch (error) {
-        console.error("Failed to fetch rates:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRates();
-  }, [baseCurrency]);
-
-  const tndRate = rates["TND"] || 0;
+    fetchDevises();
+  }, [fetchDevises]);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border border-gray-300 shadow-md">
-        <thead className="bg-yellow-500 text-white">
-          <tr>
-            <th className="px-4 py-2 text-left">Titre</th>
-            <th className="px-4 py-2 text-left">Identifiant</th>
-            <th className="px-4 py-2 text-left">Unité</th>
-            <th className="px-4 py-2 text-left">Achat (TND)</th>
-            <th className="px-4 py-2 text-left">Vente (TND)</th>
-            <th className="px-4 py-2 text-left">Conversion</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
-            <tr>
-              <td className="px-4 py-2" colSpan={6}>
-                Loading rates...
-              </td>
-            </tr>
-          ) : (
-            currencies.map((currency, index) => {
-              const currencyRate = rates[currency.code] || 0;
-              let rateInTND = 0;
-              if (currencyRate && tndRate) {
-                rateInTND = (tndRate / currencyRate) * currency.unit;
-              }
-              const achat = rateInTND;
-              const vente = achat * 1.01;
+    <div id="currencytable" className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+   
 
-              const FlagComponent = flagMap[currency.country];
+      {/* Gestion des erreurs */}
+      {error && (
+        <div className="bg-red-100 text-red-700 p-4 mb-4 rounded-lg text-center">
+          {error}
+        </div>
+      )}
 
-              return (
-                <tr key={index} className="border-b">
-                  <td className="px-4 py-2 flex items-center">
-                    {FlagComponent ? (
-                      <FlagComponent className="w-6 h-4 mr-2" />
-                    ) : (
-                      <Image
-                        src={`https://flagcdn.com/w40/${currency.country}.png`}
-                        alt={`${currency.title} Flag`}
-                        width={24}
-                        height={16}
-                        className="mr-2"
-                      />
-                    )}
-                    {currency.title}
-                  </td>
-                  <td className="px-4 py-2">{currency.code}</td>
-                  <td className="px-4 py-2">{currency.unit}</td>
-                  <td className="px-4 py-2 text-green-600">
-                    {achat ? achat.toFixed(3) : "N/A"}
-                  </td>
-                  <td className="px-4 py-2 text-red-600">
-                    {vente ? vente.toFixed(3) : "N/A"}
-                  </td>
-                  <td className="px-4 py-2">
-                    <button className="bg-yellow-500 text-white px-3 py-1 rounded transition hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                      <Link href={"#CurrencyConverter"}>Convertir</Link>
-                    </button>
+      {/* Loader avec skeleton effect */}
+      {loading ? (
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-300 rounded mb-4 w-1/3 mx-auto"></div>
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+          ))}
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse rounded-lg overflow-hidden shadow-md">
+            <thead>
+              <tr className="bg-yellow-500 text-white text-lg">
+                <th className="p-3">Code</th>
+                <th className="p-3">Nom</th>
+                <th className="p-3">Unité</th>
+                <th className="p-3">Achat</th>
+                <th className="p-3">Vente</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(devises) && devises.length > 0 ? (
+                devises.map((devise) => (
+                  <tr
+                    key={devise.id}
+                    className="border-b transition hover:bg-gray-100"
+                  >
+                    <td className="p-3 text-center">{devise.code}</td>
+                    <td className="p-3 text-center">{devise.nom}</td>
+                    <td className="p-3 text-center">{devise.unite}</td>
+                    <td className="p-3 text-center font-semibold text-green-600">
+                      {devise.achat.toFixed(3)}
+                    </td>
+                    <td className="p-3 text-center font-semibold text-red-500">
+                      {devise.vent.toFixed(3)}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="p-3 text-center text-gray-500" colSpan={5}>
+                    Aucune devise trouvée.
                   </td>
                 </tr>
-              );
-            })
-          )}
-        </tbody>
-      </table>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

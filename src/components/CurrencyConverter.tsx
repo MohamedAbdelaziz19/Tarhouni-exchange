@@ -1,103 +1,96 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { getExchangeRates } from "../../utils/api";
+import React, { useState, useEffect } from "react";
+import { ArrowLeftRight } from "lucide-react"; // Remplacement de Heroicons par Lucide
 
-const CurrencyConverter = () => {
-  const [rates, setRates] = useState<{ [key: string]: number }>({});
-  const [base, setBase] = useState("USD");
-  const [target, setTarget] = useState("EUR");
+function CurrencyConverter() {
+  const [currencies, setCurrencies] = useState<{ code: string; nom: string; achat: number }[]>([]);
+  const [fromCurrency, setFromCurrency] = useState("EUR");
+  const [toCurrency, setToCurrency] = useState("TND");
   const [amount, setAmount] = useState(1);
-  const [convertedAmount, setConvertedAmount] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [convertedAmount, setConvertedAmount] = useState(0);
 
+  // Fetch data from the API
   useEffect(() => {
-    const fetchRates = async () => {
-      setLoading(true);
+    const fetchCurrencies = async () => {
       try {
-        const ratesData = await getExchangeRates(base);
-        setRates(ratesData);
-        setLoading(false);
-      } catch {
-        setError("Error fetching exchange rates");
-        setLoading(false);
+        const response = await fetch("/api/currencies");
+        const data = await response.json();
+        setCurrencies(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des devises :", error);
       }
     };
 
-    fetchRates();
-  }, [base]);
+    fetchCurrencies();
+  }, []);
 
-  const convertCurrency = () => {
-    if (rates[target]) {
-      const result = parseFloat((amount * rates[target]).toFixed(2));
-      setConvertedAmount(result);
-    }
-  };
+  // Calculate the converted amount
+  useEffect(() => {
+    const fromRate = currencies.find((c) => c.code === fromCurrency)?.achat || 1;
+    const toRate = currencies.find((c) => c.code === toCurrency)?.achat || 1;
+
+    setConvertedAmount((amount * fromRate) / toRate);
+  }, [amount, fromCurrency, toCurrency, currencies]);
 
   return (
-    <div className="max-w-md mx-auto my-10 p-6 bg-white shadow-xl rounded-xl transition-all transform hover:scale-105">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Currency Converter</h2>
-      {loading ? (
-        <p className="text-center text-gray-600">Loading exchange rates...</p>
-      ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
-      ) : (
-        <>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Amount:</label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
-            />
-          </div>
-          <div className="mb-4 grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-700 mb-1">From:</label>
-              <select
-                value={base}
-                onChange={(e) => setBase(e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
-              >
-                {Object.keys(rates).map((currency) => (
-                  <option key={currency} value={currency}>
-                    {currency}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-gray-700 mb-1">To:</label>
-              <select
-                value={target}
-                onChange={(e) => setTarget(e.target.value)}
-                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
-              >
-                {Object.keys(rates).map((currency) => (
-                  <option key={currency} value={currency}>
-                    {currency}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <button
-            onClick={convertCurrency}
-            className="w-full bg-yellow-500 text-white py-2 rounded-lg shadow-md transition transform hover:scale-105 hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300"
+    <div className="p-6 bg-gradient-to-br from-yellow-200 to-yellow-500 rounded-lg shadow-xl w-full max-w-md mx-auto text-white">
+      <h1 className="text-3xl font-bold mb-6 text-center">💱 Convertisseur de devises</h1>
+
+      {/* Input Montant */}
+      <div className="mb-6">
+        <label className="block text-lg font-semibold mb-2">Je donne</label>
+        <div className="flex items-center border border-white rounded-lg overflow-hidden bg-white text-black">
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            className="w-full p-3 border-none outline-none text-lg"
+          />
+          <select
+            value={fromCurrency}
+            onChange={(e) => setFromCurrency(e.target.value)}
+            className="p-3 bg-gray-200 border-l cursor-pointer"
           >
-            Convert
-          </button>
-          {convertedAmount !== null && (
-            <p className="mt-6 text-center text-xl font-semibold text-gray-800">
-              Converted Amount: {convertedAmount} {target}
-            </p>
-          )}
-        </>
-      )}
+            {currencies.map((currency) => (
+              <option key={currency.code} value={currency.code}>
+                {currency.code}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Icône d'échange animée */}
+      <div className="flex justify-center my-4">
+        <ArrowLeftRight className="w-10 h-10 text-white animate-pulse" />
+      </div>
+
+      {/* Résultat Conversion */}
+      <div>
+        <label className="block text-lg font-semibold mb-2">Je reçois</label>
+        <div className="flex items-center border border-white rounded-lg overflow-hidden bg-white text-black">
+          <input
+            type="text"
+            value={convertedAmount.toFixed(3)}
+            readOnly
+            className="w-full p-3 border-none outline-none text-lg bg-gray-100"
+          />
+          <select
+            value={toCurrency}
+            onChange={(e) => setToCurrency(e.target.value)}
+            className="p-3 bg-gray-200 border-l cursor-pointer"
+          >
+            {currencies.map((currency) => (
+              <option key={currency.code} value={currency.code}>
+                {currency.code}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default CurrencyConverter;

@@ -29,7 +29,7 @@ function Navbar() {
             <ul className="flex items-center gap-8 text-base font-medium">
               <li>
                 <a 
-                  href="#"
+                  href="#about"
                   className="text-gray-700 transition duration-200 ease-in-out hover:text-yellow-500"
                 >
                   About
@@ -37,7 +37,7 @@ function Navbar() {
               </li>
               <li>
                 <a 
-                  href="#"
+                  href="#service"
                   className="text-gray-700 transition duration-200 ease-in-out hover:text-yellow-500"
                 >
                   Services
@@ -45,7 +45,7 @@ function Navbar() {
               </li>
               <li>
                 <a 
-                  href="#"
+                  href="#currencytable"
                   className="text-gray-700 transition duration-200 ease-in-out hover:text-yellow-500"
                 >
                   Cours de Change
@@ -53,7 +53,7 @@ function Navbar() {
               </li>
               <li>
                 <a 
-                  href="#"
+                  href="#contact"
                   className="text-gray-700 transition duration-200 ease-in-out hover:text-yellow-500"
                 >
                   Contact
@@ -94,25 +94,25 @@ function Navbar() {
         <div className="md:hidden animate-slideDown">
           <nav className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white navbar-shadow">
             <a
-              href="#"
+              href="#about"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition duration-200 ease-in-out hover:bg-gray-100"
             >
               About
             </a>
             <a
-              href="#"
+              href="#service"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition duration-200 ease-in-out hover:bg-gray-100"
             >
               Services
             </a>
             <a
-              href="#"
+              href="#currencytable"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition duration-200 ease-in-out hover:bg-gray-100"
             >
               Cours de Change
             </a>
             <a
-              href="#"
+              href="#contact"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition duration-200 ease-in-out hover:bg-gray-100"
             >
               Contact

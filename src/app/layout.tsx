@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tarhouni Exchane",
+  title: "Tarhouni Exchange",
 };
 
 export default function RootLayout({

@@ -3,7 +3,7 @@ import { FaRegLightbulb, FaHeadset, FaSearchDollar } from "react-icons/fa"; // I
 
 const Service = () => {
   return (
-    <div className="bg-gray-100 py-10">
+    <div id="service" className="bg-gray-100 py-10">
       <div className="max-w-6xl mx-auto text-center space-y-6">
         <h2 className="text-3xl font-bold text-yellow-500">Nos Services</h2>
         <p className="text-lg text-gray-600">
