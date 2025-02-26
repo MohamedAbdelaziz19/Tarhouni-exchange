@@ -1,28 +1,24 @@
-//api/currencies/route.ts 
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 
 export async function GET() {
   try {
-    console.log("🌍 DATABASE_URL:", process.env.DATABASE_URL); // 🔥 Ajout du log
+    console.log("🌍 DATABASE_URL:", process.env.DATABASE_URL); // 🔥 Log for DATABASE_URL
 
-    await prisma.$connect();
-    console.log("✅ Connexion à Prisma réussie !"); // 🔥 Log pour vérifier Prisma
-
+    // No need to manually connect in serverless environments
     const devises = await prisma.devise.findMany({
       orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json(devises);
   } catch (error) {
-    console.error("❌ Erreur API /api/currencies :", error); // 🔥 Log de l'erreur
+    console.error("❌ Erreur API /api/currencies :", error); // 🔥 Log for detailed error
     return NextResponse.json(
-      { message: "Erreur lors de la récupération", error },
+      { message: "Erreur lors de la récupération", error: error },
       { status: 500 }
     );
   }
 }
-
 
 export async function POST(req: Request) {
   try {
@@ -60,8 +56,7 @@ export async function POST(req: Request) {
   }
 }
 
-
-//PUT
+// PUT
 export async function PUT(req: Request) {
   try {
     const body = await req.json();
@@ -73,7 +68,7 @@ export async function PUT(req: Request) {
         { status: 400 }
       );
     }
-    
+
     const updatedDevise = await prisma.devise.update({
       where: { id: body.id },
       data: {
@@ -98,11 +93,9 @@ export async function PUT(req: Request) {
   }
 }
 
-
 // DELETE: Supprimer une devise existante
 export async function DELETE(req: Request) {
   try {
-    // On attend l'id en paramètre via l'URL ou dans le body (ici, nous le récupérons depuis le body)
     const { id } = await req.json();
 
     if (!id) {
@@ -128,4 +121,3 @@ export async function DELETE(req: Request) {
     );
   }
 }
-

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 interface DeviseData {
   id: string;
@@ -16,30 +16,32 @@ const CurrencyTable = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  const fetchDevises = useCallback(async () => {
-    try {
-      const res = await fetch("/api/currencies" , { cache: "no-store" });
-      if (!res.ok) {
-        throw new Error("Erreur lors de la récupération des devises");
-      }
-      const data = await res.json();
-      setDevises(data);
-    } catch {
-      console.error("Erreur lors du chargement");
-      setError("Erreur lors de la récupération des devises. Veuillez réessayer.");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchDevises = async () => {
+      try {
+        const res = await fetch("/api/currencies", { cache: "no-store" });
+        if (!res.ok) {
+          throw new Error("Erreur lors de la récupération des devises");
+        }
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setDevises(data);
+        } else {
+          setError("Les données des devises ne sont pas valides.");
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des devises", error);
+        setError("Erreur lors de la récupération des devises. Veuillez réessayer.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchDevises();
-  }, [fetchDevises]);
+  }, []);
 
   return (
     <div id="currencytable" className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-   
-
       {/* Gestion des erreurs */}
       {error && (
         <div className="bg-red-100 text-red-700 p-4 mb-4 rounded-lg text-center">
@@ -56,7 +58,7 @@ const CurrencyTable = () => {
           ))}
         </div>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-auto">
           <table className="w-full border-collapse rounded-lg overflow-hidden shadow-md">
             <thead>
               <tr className="bg-yellow-500 text-white text-lg">
@@ -68,20 +70,17 @@ const CurrencyTable = () => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(devises) && devises.length > 0 ? (
+              {devises.length > 0 ? (
                 devises.map((devise) => (
-                  <tr
-                    key={devise.id}
-                    className="border-b transition hover:bg-gray-100"
-                  >
+                  <tr key={devise.id} className="border-b transition hover:bg-gray-100">
                     <td className="p-3 text-center">{devise.code}</td>
                     <td className="p-3 text-center">{devise.nom}</td>
                     <td className="p-3 text-center">{devise.unite}</td>
                     <td className="p-3 text-center font-semibold text-green-600">
-                      {devise.achat.toFixed(3)}
+                      {devise.achat ? devise.achat.toFixed(3) : "N/A"}
                     </td>
                     <td className="p-3 text-center font-semibold text-red-500">
-                      {devise.vent.toFixed(3)}
+                      {devise.vent ? devise.vent.toFixed(3) : "N/A"}
                     </td>
                   </tr>
                 ))
