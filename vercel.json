@@ -1,9 +1,0 @@
-{
-    "rewrites": [
-      { "source": "/api/currencies", "destination": "/api/currencies" }
-    ],
-    "routes": [
-      { "src": "/api/.*", "dest": "/api" }
-    ]
-  }
-  
