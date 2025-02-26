@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import ErrorPage from "@/error";
 import LoadingPage from "@/loading";
@@ -11,64 +11,49 @@ import HeroSection from "@/components/HeroSection";
 import Service from "@/components/Service";
 import About from "@/components/About";
 
-
-// Import dynamique pour éviter le SSR sur ces composants (facultatif)
-const CurrencyConverter = dynamic(() => import("@/components/CurrencyConverter"), { 
-    ssr: false 
-});
-const DateTableCurrency = dynamic(() => import("@/components/DateTableCurrency"), { 
-    ssr: false 
-});
-const CurrencyTable = dynamic(() => import("@/components/CurrencyTable"), { 
-    ssr: false 
-});
+// Import dynamique pour éviter le SSR (facultatif)
+const CurrencyConverter = dynamic(() => import("@/components/CurrencyConverter"), { ssr: false });
+const DateTableCurrency = dynamic(() => import("@/components/DateTableCurrency"), { ssr: false });
+const CurrencyTable = dynamic(() => import("@/components/CurrencyTable"), { ssr: false });
 
 export const runtime = "edge";
 
 const MainPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simule un délai de chargement
+        const response = await fetch("https://www.tarhouni-exchange.com/");
+        if (!response.ok) throw new Error("Erreur lors du chargement des devises.");
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setHasError(true);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) return <LoadingPage />;
+  if (hasError) return <ErrorPage error={new Error("Erreur lors du chargement des données")} />;
+
   return (
     <div>
       <Navbar />
       <HeroSection />
       <About />
-
-      {/* Gestion du chargement et des erreurs */}
-      <Suspense fallback={<LoadingPage />}>
-        <ErrorBoundary>
-          <CurrencyConverter />
-          <DateTableCurrency />
-          <CurrencyTable />
-        </ErrorBoundary>
-      </Suspense>
-
+      <CurrencyConverter />
+      <DateTableCurrency />
+      <CurrencyTable />
       <Service />
       <Contact />
       <Footer />
     </div>
   );
 };
-
-// Composant pour gérer les erreurs
-class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error) {
-    console.error("Error caught by ErrorBoundary:", error);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <ErrorPage error={new Error("Erreur lors du chargement des données")} />;
-    }
-    return this.props.children;
-  }
-}
 
 export default MainPage;
