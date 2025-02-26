@@ -18,7 +18,7 @@ const CurrencyTable = () => {
 
   const fetchDevises = useCallback(async () => {
     try {
-      const res = await fetch("/api/currencies");
+      const res = await fetch("/api/currencies" , { cache: "no-store" });
       if (!res.ok) {
         throw new Error("Erreur lors de la récupération des devises");
       }
