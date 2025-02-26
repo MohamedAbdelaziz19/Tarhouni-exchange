@@ -4,13 +4,18 @@ import { prisma } from "../../../../lib/prisma";
 
 export async function GET() {
   try {
+    console.log("🌍 DATABASE_URL:", process.env.DATABASE_URL); // 🔥 Ajout du log
+
+    await prisma.$connect();
+    console.log("✅ Connexion à Prisma réussie !"); // 🔥 Log pour vérifier Prisma
+
     const devises = await prisma.devise.findMany({
-      orderBy: { createdAt: "desc" }, // Trier par date de création (facultatif)
+      orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json(devises);
   } catch (error) {
-    console.error("Erreur lors de la récupération des devises :", error);
+    console.error("❌ Erreur API /api/currencies :", error); // 🔥 Log de l'erreur
     return NextResponse.json(
       { message: "Erreur lors de la récupération", error },
       { status: 500 }
