@@ -17,27 +17,22 @@ const CurrencyTable = () => {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const fetchDevises = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch("/api/currencies", { cache: "no-store" });
-        if (!res.ok) {
-          throw new Error("Erreur lors de la récupération des devises");
-        }
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setDevises(data);
-        } else {
-          setError("Les données des devises ne sont pas valides.");
-        }
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simule un délai de chargement
+        const response = await fetch("/api/currencies");
+        if (!response.ok) throw new Error("Erreur lors du chargement des devises.");
+        const data = await response.json();
+        setDevises(data);
+        setLoading(false);
       } catch (error) {
-        console.error("Erreur lors du chargement des devises", error);
-        setError("Erreur lors de la récupération des devises. Veuillez réessayer.");
-      } finally {
+        console.error(error);
+        setError("Erreur lors du chargement des devises.");
         setLoading(false);
       }
     };
 
-    fetchDevises();
+    fetchData();
   }, []);
 
   return (

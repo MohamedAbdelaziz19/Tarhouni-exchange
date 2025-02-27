@@ -10,6 +10,8 @@ interface DeviseData {
   vent: number;
 }
 
+export const runtime ="edge";
+
 const AdminCurrencyForm = () => {
   const [devises, setDevises] = useState<DeviseData[]>([]);
   const [newDevise, setNewDevise] = useState<Omit<DeviseData, "id">>({
@@ -83,6 +85,8 @@ const AdminCurrencyForm = () => {
       setMessage("Erreur lors de la suppression.");
     }
   };
+
+
 
   return (
     <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md space-y-6">

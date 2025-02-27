@@ -5,6 +5,8 @@ export async function GET() {
   try {
     console.log("🌍 DATABASE_URL:", process.env.DATABASE_URL); // 🔥 Log for DATABASE_URL
 
+    await prisma.$connect();
+    console.log("✅ Connexion Prisma réussie !");
     // No need to manually connect in serverless environments
     const devises = await prisma.devise.findMany({
       orderBy: { createdAt: "desc" },
@@ -22,8 +24,16 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
+    if (req.method !== "POST") {
+      return NextResponse.json(
+        { message: "Méthode non autorisée" },
+        { status: 405 }
+      );
+    }
+
     const body = await req.json();
     
+    // Vérification des champs obligatoires
     if (!body.code || !body.nom || !body.unite || !body.achat || !body.vent) {
       return NextResponse.json(
         { message: "Tous les champs sont requis" },
@@ -31,6 +41,19 @@ export async function POST(req: Request) {
       );
     }
 
+    // Vérification des types de données
+    if (
+      typeof body.code !== "string" ||
+      typeof body.nom !== "string" ||
+      typeof body.unite !== "number" ||
+      typeof body.achat !== "number" ||
+      typeof body.vent !== "number"
+    ) {
+      return NextResponse.json(
+        { message: "Types de données invalides" },
+        { status: 400 }
+      );
+    }
     const createdDevise = await prisma.devise.create({
       data: {
         code: body.code,
