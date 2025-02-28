@@ -1,6 +1,35 @@
-import React from "react";
+import React, { FormEvent } from "react";
+import Swal from "sweetalert2";
 
 const Contact = () => {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    formData.append("access_key", "719907ab-0bf8-4a4b-b281-ee43cf3e0fbd");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      Swal.fire({
+        title: "Success!",
+        text: "Message envoyé avec succès!",
+        icon: "success",
+      });
+    }
+  }
+
   return (
     <div id="contact">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -13,32 +42,24 @@ const Contact = () => {
             Remplissez le formulaire ci-dessous et nous vous répondrons dès que possible.
           </p>
 
-          <form action="#" className="mt-6 mb-0 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+          {/* Utilisation correcte de `handleSubmit` */}
+          <form
+            className="mt-6 mb-0 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
+            onSubmit={handleSubmit}
+          >
             <p className="text-center text-lg font-medium">Détails de contact</p>
 
             {/* Nom */}
             <div>
               <label htmlFor="nom" className="sr-only">
-                Nom
+                Nom et Prénom
               </label>
               <input
                 type="text"
-                id="nom"
+                name="name"
                 className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-xs"
-                placeholder="Nom"
-              />
-            </div>
-
-            {/* Prénom */}
-            <div>
-              <label htmlFor="prenom" className="sr-only">
-                Prénom
-              </label>
-              <input
-                type="text"
-                id="prenom"
-                className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-xs"
-                placeholder="Prénom"
+                placeholder="Nom et Prénom"
+                required
               />
             </div>
 
@@ -49,9 +70,10 @@ const Contact = () => {
               </label>
               <input
                 type="tel"
-                id="telephone"
+                name="telephone"
                 className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-xs"
                 placeholder="Numéro de téléphone"
+                required
               />
             </div>
 
@@ -62,9 +84,10 @@ const Contact = () => {
               </label>
               <input
                 type="email"
-                id="email"
+                name="email"
                 className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-xs"
                 placeholder="Email"
+                required
               />
             </div>
 
@@ -73,12 +96,12 @@ const Contact = () => {
               <label htmlFor="description" className="sr-only">
                 Description
               </label>
-              <input
-                type="text"
-                id="description"
+              <textarea
+                name="description"
                 className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-xs"
                 placeholder="Description"
-              />
+                required
+              ></textarea>
             </div>
 
             {/* Submit Button */}

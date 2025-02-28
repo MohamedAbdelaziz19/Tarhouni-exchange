@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ArrowLeftRight } from "lucide-react"; // Remplacement de Heroicons par Lucide
+import { ArrowLeftRight } from "lucide-react"; // Icône d'échange
 
 function CurrencyConverter() {
   const [currencies, setCurrencies] = useState<{ code: string; nom: string; achat: number }[]>([]);
   const [fromCurrency, setFromCurrency] = useState("EUR");
-  const [toCurrency, setToCurrency] = useState("TND");
   const [amount, setAmount] = useState(1);
   const [convertedAmount, setConvertedAmount] = useState(0);
 
-  // Fetch data from the API
+  // Récupération des taux de change
   useEffect(() => {
     const fetchCurrencies = async () => {
       try {
@@ -25,13 +24,13 @@ function CurrencyConverter() {
     fetchCurrencies();
   }, []);
 
-  // Calculate the converted amount
+  // Conversion basée uniquement sur le TND
   useEffect(() => {
     const fromRate = currencies.find((c) => c.code === fromCurrency)?.achat || 1;
-    const toRate = currencies.find((c) => c.code === toCurrency)?.achat || 1;
+    const tndRate = currencies.find((c) => c.code === "TND")?.achat || 1;
 
-    setConvertedAmount((amount * fromRate) / toRate);
-  }, [amount, fromCurrency, toCurrency, currencies]);
+    setConvertedAmount((amount * fromRate) / tndRate);
+  }, [amount, fromCurrency, currencies]);
 
   return (
     <div className="p-6 bg-gradient-to-br from-yellow-200 to-yellow-500 rounded-lg shadow-xl w-full max-w-md mx-auto text-white">
@@ -61,14 +60,14 @@ function CurrencyConverter() {
         </div>
       </div>
 
-      {/* Icône d'échange animée */}
+      {/* Icône d'échange */}
       <div className="flex justify-center my-4">
         <ArrowLeftRight className="w-10 h-10 text-white animate-pulse" />
       </div>
 
       {/* Résultat Conversion */}
       <div>
-        <label className="block text-lg font-semibold mb-2">Je reçois</label>
+        <label className="block text-lg font-semibold mb-2">Je reçois en TND</label>
         <div className="flex items-center border border-white rounded-lg overflow-hidden bg-white text-black">
           <input
             type="text"
@@ -76,17 +75,7 @@ function CurrencyConverter() {
             readOnly
             className="w-full p-3 border-none outline-none text-lg bg-gray-100"
           />
-          <select
-            value={toCurrency}
-            onChange={(e) => setToCurrency(e.target.value)}
-            className="p-3 bg-gray-200 border-l cursor-pointer"
-          >
-            {currencies.map((currency) => (
-              <option key={currency.code} value={currency.code}>
-                {currency.code}
-              </option>
-            ))}
-          </select>
+          <span className="p-3 bg-gray-200 border-l text-lg font-semibold">TND</span>
         </div>
       </div>
     </div>

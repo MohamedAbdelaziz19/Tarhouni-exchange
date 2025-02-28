@@ -1,6 +1,6 @@
 import React from "react";
 import { ShieldCheck, DollarSign, Globe, Users,Mail,Phone,MapPin} from "lucide-react";
-import Image from "next/image";
+import GoogleMapComponent from "./Map";
 
 const About = () => {
   return (
@@ -23,14 +23,8 @@ const About = () => {
         {/* Content */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left: Image */}
-          <div className="relative">
-            <Image
-              src="/image/exemple 4.png" // Assurez-vous d'ajouter une image appropriée dans /public/images/
-              alt="Tarhouni Exchange"
-              width={600}
-              height={400}
-              className="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-            />
+          <div className="relative rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+           <GoogleMapComponent/>
           </div>
 
           {/* Right: Features */}

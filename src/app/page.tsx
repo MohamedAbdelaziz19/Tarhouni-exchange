@@ -12,6 +12,7 @@ import Service from "@/components/Service";
 import About from "@/components/About";
 
 
+
 // Import dynamique pour éviter le SSR sur ces composants (facultatif)
 const CurrencyConverter = dynamic(() => import("@/components/CurrencyConverter"), { 
     ssr: false 
@@ -24,7 +25,6 @@ const CurrencyTable = dynamic(() => import("@/components/CurrencyTable"), {
 });
 
 export const runtime = "edge";
-
 
 const MainPage = () => {
   return (
