@@ -15,6 +15,7 @@ model Devise {
   unite     Float
   achat     Float
   vent      Float
+  flag      String?  // Stocke l'URL de l'image du drapeau
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -1,5 +1,7 @@
 "use client";
+import Image from "next/image";
 import { useState, useEffect } from "react";
+import { Globe } from "lucide-react";
 
 interface DeviseData {
   id: string;
@@ -8,6 +10,7 @@ interface DeviseData {
   unite: number;
   achat: number;
   vent: number;
+  flag: string;
   createdAt: string;
 }
 
@@ -21,7 +24,8 @@ const CurrencyTable = () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 2000)); // Simule un délai de chargement
         const response = await fetch("/api/currencies");
-        if (!response.ok) throw new Error("Erreur lors du chargement des devises.");
+        if (!response.ok)
+          throw new Error("Erreur lors du chargement des devises.");
         const data = await response.json();
         setDevises(data);
         setLoading(false);
@@ -36,7 +40,10 @@ const CurrencyTable = () => {
   }, []);
 
   return (
-    <div id="currencytable" className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div
+      id="currencytable"
+      className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg"
+    >
       {/* Gestion des erreurs */}
       {error && (
         <div className="bg-red-100 text-red-700 p-4 mb-4 rounded-lg text-center">
@@ -56,7 +63,10 @@ const CurrencyTable = () => {
         <div className="overflow-auto">
           <table className="w-full border-collapse rounded-lg overflow-hidden shadow-md">
             <thead>
-              <tr className="bg-yellow-500 text-white text-lg">
+              <tr className="bg-yellow-300 text-white text-lg">
+                <th className=" flex justify-center p-3">
+                  <Globe className="text-gray-700" />
+                </th>
                 <th className="p-3">Code</th>
                 <th className="p-3">Nom</th>
                 <th className="p-3">Unité</th>
@@ -67,7 +77,21 @@ const CurrencyTable = () => {
             <tbody>
               {devises.length > 0 ? (
                 devises.map((devise) => (
-                  <tr key={devise.id} className="border-b transition hover:bg-gray-100">
+                  <tr
+                    key={devise.id}
+                    className="border-b transition hover:bg-gray-100"
+                  >
+                    <td className="border p-2">
+                      {devise.flag && (
+                        <Image
+                          src={devise.flag}
+                          alt="Drapeau"
+                          width={50}
+                          height={50}
+                          className="object-cover mx-auto"
+                        />
+                      )}
+                    </td>
                     <td className="p-3 text-center">{devise.code}</td>
                     <td className="p-3 text-center">{devise.nom}</td>
                     <td className="p-3 text-center">{devise.unite}</td>

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface DeviseData {
   id: string;
@@ -8,9 +9,10 @@ interface DeviseData {
   unite: number;
   achat: number;
   vent: number;
+  flag: string;
 }
 
-export const runtime ="edge";
+export const runtime = "edge";
 
 const AdminCurrencyForm = () => {
   const [devises, setDevises] = useState<DeviseData[]>([]);
@@ -20,8 +22,11 @@ const AdminCurrencyForm = () => {
     unite: 0,
     achat: 0,
     vent: 0,
+    flag: "",
   });
-  const [updateDeviseData, setUpdateDeviseData] = useState<DeviseData | null>(null);
+  const [updateDeviseData, setUpdateDeviseData] = useState<DeviseData | null>(
+    null
+  );
   const [message, setMessage] = useState<string>("");
 
   const fetchDevises = () => {
@@ -45,16 +50,22 @@ const AdminCurrencyForm = () => {
     if (response.ok) {
       setMessage("Nouvelle devise ajoutée avec succès.");
       fetchDevises();
-      setNewDevise({ code: "", nom: "", unite: 0, achat: 0, vent: 0 });
+      setNewDevise({
+        code: "",
+        nom: "",
+        unite: 0,
+        achat: 0,
+        vent: 0,
+        flag: "",
+      });
     } else {
       const error = await response.json();
       setMessage(error.message || "Erreur lors de l'ajout.");
     }
   };
-  
 
   const handleUpdateDevise = async (devise: DeviseData) => {
-    // Utilisez la devise passée en paramètre pour initialiser updateDeviseData 
+    // Utilisez la devise passée en paramètre pour initialiser updateDeviseData
     // si ce n'est pas déjà fait ou pour la mettre à jour.
     const dataToUpdate = updateDeviseData ?? devise;
     const response = await fetch("/api/currencies", {
@@ -70,7 +81,6 @@ const AdminCurrencyForm = () => {
       setMessage("Erreur lors de la mise à jour.");
     }
   };
-  
 
   const handleDeleteDevise = async (id: string) => {
     const response = await fetch("/api/currencies", {
@@ -85,8 +95,6 @@ const AdminCurrencyForm = () => {
       setMessage("Erreur lors de la suppression.");
     }
   };
-
-
 
   return (
     <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md space-y-6">
@@ -107,12 +115,37 @@ const AdminCurrencyForm = () => {
         </h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
+            <label className="block text-gray-700">Drapeau (Image)</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files?.[0]) {
+                  const file = e.target.files[0];
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    setNewDevise({
+                      ...newDevise,
+                      flag: reader.result as string,
+                    });
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
+              className="w-full border p-2 rounded"
+            />
+          </div>
+
+          <div>
             <label className="block text-gray-700">Code</label>
             <input
               type="text"
               value={newDevise.code}
               onChange={(e) =>
-                setNewDevise({ ...newDevise, code: e.target.value.toUpperCase() })
+                setNewDevise({
+                  ...newDevise,
+                  code: e.target.value.toUpperCase(),
+                })
               }
               placeholder="Ex: USD"
               className="w-full border p-2 rounded"
@@ -140,7 +173,10 @@ const AdminCurrencyForm = () => {
               type="number"
               value={newDevise.unite}
               onChange={(e) =>
-                setNewDevise({ ...newDevise, unite: parseFloat(e.target.value) })
+                setNewDevise({
+                  ...newDevise,
+                  unite: parseFloat(e.target.value),
+                })
               }
               placeholder="Ex: 1"
               className="w-full border p-2 rounded"
@@ -153,7 +189,10 @@ const AdminCurrencyForm = () => {
               type="number"
               value={newDevise.achat}
               onChange={(e) =>
-                setNewDevise({ ...newDevise, achat: parseFloat(e.target.value) })
+                setNewDevise({
+                  ...newDevise,
+                  achat: parseFloat(e.target.value),
+                })
               }
               placeholder="Ex: 3.15"
               className="w-full border p-2 rounded"
@@ -190,6 +229,7 @@ const AdminCurrencyForm = () => {
         <table className="w-full border-collapse mt-4">
           <thead>
             <tr className="bg-gray-100">
+              <th className="border p-2">Drapeau</th>
               <th className="border p-2">Code</th>
               <th className="border p-2">Nom</th>
               <th className="border p-2">Unité</th>
@@ -202,6 +242,17 @@ const AdminCurrencyForm = () => {
             {devises.length > 0 ? (
               devises.map((devise) => (
                 <tr key={devise.id} className="text-center">
+                  <td className="border p-2">
+                    {devise.flag && (
+                      <Image
+                        src={devise.flag}
+                        alt="Drapeau"
+                        width={50}
+                        height={50}
+                        className="w-10 h-6 object-cover mx-auto"
+                      />
+                    )}
+                  </td>
                   <td className="border p-2">{devise.code}</td>
                   <td className="border p-2">{devise.nom}</td>
                   <td className="border p-2">{devise.unite}</td>

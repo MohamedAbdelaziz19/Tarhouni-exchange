@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     
     // Vérification des champs obligatoires
-    if (!body.code || !body.nom || !body.unite || !body.achat || !body.vent) {
+    if (!body.flag || !body.code || !body.nom || !body.unite || !body.achat || !body.vent) {
       return NextResponse.json(
         { message: "Tous les champs sont requis" },
         { status: 400 }
@@ -43,6 +43,7 @@ export async function POST(req: Request) {
 
     // Vérification des types de données
     if (
+      typeof body.flag !== "string" ||
       typeof body.code !== "string" ||
       typeof body.nom !== "string" ||
       typeof body.unite !== "number" ||
@@ -56,6 +57,7 @@ export async function POST(req: Request) {
     }
     const createdDevise = await prisma.devise.create({
       data: {
+        flag: body.flag,
         code: body.code,
         nom: body.nom,
         unite: body.unite,
