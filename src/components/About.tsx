@@ -4,9 +4,9 @@ import GoogleMapComponent from "./Map";
 
 const About = () => {
   return (
-    <section id="about" className="relative bg-gray-50 py-16 px-6 md:px-12 lg:px-24">
+    <section id="about" className="relative  py-16 px-6 md:px-12 lg:px-24">
       {/* Background Overlay */}
-      <div className="absolute inset-0 bg-yellow-900 opacity-10"></div>
+      <div className="absolute inset-0 opacity-10"></div>
 
       <div className="relative max-w-6xl mx-auto">
         {/* Section Header */}
@@ -32,7 +32,7 @@ const About = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="flex items-start space-x-4 p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300 animate-fade-up"
+                className="flex items-start space-x-4 p-4 bg-white shadow-md rounded-lg border border-yellow-200 hover:shadow-lg transition-shadow duration-300 animate-fade-up"
               >
                 <div className="p-3 rounded-full bg-yellow-100 text-yellow-500">
                   {feature.icon}
