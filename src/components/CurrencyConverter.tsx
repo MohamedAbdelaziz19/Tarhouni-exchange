@@ -43,7 +43,7 @@ function CurrencyConverter() {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-br from-yellow-200 to-yellow-500 rounded-lg shadow-xl w-full max-w-md mx-auto text-white">
+    <div id="Convert" className="my-10 p-8 bg-gradient-to-br from-yellow-200 to-yellow-500 rounded-lg shadow-xl w-full max-w-md mx-auto text-white">
       <h1 className="text-3xl font-bold mb-6 text-center">💱 Convertisseur de devises</h1>
 
       {/* Input Montant */}

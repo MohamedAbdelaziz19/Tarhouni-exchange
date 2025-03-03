@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Service from "@/components/Service";
 import About from "@/components/About";
+import Info from "@/components/Info";
 
 
 
@@ -32,7 +33,7 @@ const MainPage = () => {
       <Navbar />
       <HeroSection />
       <About />
-
+      <Info/>
       {/* Gestion du chargement et des erreurs */}
       <Suspense fallback={<LoadingPage />}>
         <ErrorBoundary>

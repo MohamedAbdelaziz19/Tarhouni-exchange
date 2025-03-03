@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 const images = [
@@ -40,7 +41,12 @@ function HeroSection() {
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center">
         <h2 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl lg:text-6xl transition-transform duration-500 hover:scale-105">
-        Tarhouni Exchange
+        <Image
+         src={"/image/Tarhouni EXCHANGE - WHITE png.png"}
+         alt=''
+         width={300}
+         height={300}
+        />
         </h2>
         <p className="mt-4 max-w-lg text-white/90 text-base md:mt-6 md:text-lg md:leading-relaxed">
         Bureau de change à Teboulba agréé par la Banque Centrale de Tunisie
@@ -48,7 +54,7 @@ function HeroSection() {
         </p>
         <div className="mt-8">
           <a
-            href="#"
+            href="#Convert"
             className="inline-block rounded-full bg-yellow-500 px-8 py-3 text-sm font-medium text-white shadow-lg transition duration-300 ease-in-out hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-400"
           >
             Change Votre Monais

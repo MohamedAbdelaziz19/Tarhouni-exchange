@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck, DollarSign, Globe, Users,Mail,Phone,MapPin} from "lucide-react";
+import { ShieldCheck, DollarSign, Globe, Users} from "lucide-react";
 import GoogleMapComponent from "./Map";
 
 const About = () => {
@@ -48,49 +48,7 @@ const About = () => {
           </div>
         </div>
 
-                {/* Contact Information */}
-                <div className="mt-16 bg-white p-8 shadow-lg rounded-lg animate-fade-up">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">
-            Info
-          </h3>
-          <div className="space-y-6 text-gray-700">
-            {/* Email */}
-            <div className="flex items-center space-x-4 p-4 bg-yellow-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-              <Mail className="w-6 h-6 text-yellow-500" />
-              <div>
-                <h4 className="text-lg font-semibold text-gray-900">Email</h4>
-                <p>tarhouni.exchange@gmail.com</p>
-              </div>
-            </div>
 
-            {/* Phone */}
-            <div className="flex items-center space-x-4 p-4 bg-yellow-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-              <Phone className="w-6 h-6 text-yellow-500" />
-              <div>
-                <h4 className="text-lg font-semibold text-gray-900">Téléphone</h4>
-                <p>29450786</p>
-              </div>
-            </div>
-
-            {/* Address */}
-            <div className="flex items-center space-x-4 p-4 bg-yellow-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-              <MapPin className="w-6 h-6 text-yellow-500" />
-              <div>
-                <h4 className="text-lg font-semibold text-gray-900">Adresse</h4>
-                <p>Rue Ennasr, Teboulba, Monastir 5080</p>
-              </div>
-            </div>
-
-            {/* Hours */}
-            <div className="flex items-center space-x-4 p-4 bg-yellow-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-              <div className="w-6 h-6 text-yellow-500">🕒</div>
-              <div>
-                <h4 className="text-lg font-semibold text-gray-900">Heures d ouverture</h4>
-                <p>08:30 - 20:30</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
