@@ -6,9 +6,9 @@ import { ArrowLeftRight } from "lucide-react";
 function CurrencyConverter() {
   const [currencies, setCurrencies] = useState<{ code: string; nom: string; achat: number; vent: number }[]>([]);
   const [fromCurrency, setFromCurrency] = useState("EUR");
-  const [amount, setAmount] = useState(1);
-  const [convertedAmount, setConvertedAmount] = useState(0);
-  const [isBuyingTND, setIsBuyingTND] = useState(true); // true = Acheter TND, false = Vendre TND
+  const [amount, setAmount] = useState(""); // Initialisation vide
+  const [convertedAmount, setConvertedAmount] = useState(""); // Initialisation vide
+  const [isBuyingTND, setIsBuyingTND] = useState(true); // Achat de TND par défaut
 
   // Récupération des taux de change
   useEffect(() => {
@@ -27,23 +27,30 @@ function CurrencyConverter() {
 
   // Conversion dynamique
   useEffect(() => {
+    if (amount === "" || isNaN(Number(amount))) {
+      setConvertedAmount(""); // Empêcher tout affichage de nombre
+      return;
+    }
+
     const fromRate = currencies.find((c) => c.code === fromCurrency)?.vent || 1;
     const tndRate = currencies.find((c) => c.code === "TND")?.achat || 1;
 
     if (isBuyingTND) {
-      setConvertedAmount((amount * fromRate) / tndRate);
+      setConvertedAmount(((Number(amount) * fromRate) / tndRate).toFixed(3));
     } else {
-      setConvertedAmount((amount * tndRate) / fromRate);
+      setConvertedAmount(((Number(amount) * tndRate) / fromRate).toFixed(3));
     }
   }, [amount, fromCurrency, isBuyingTND, currencies]);
 
   // Basculer entre Achat et Vente de TND
   const toggleExchange = () => {
     setIsBuyingTND(!isBuyingTND);
+    setAmount(""); // Réinitialiser les valeurs après le switch
+    setConvertedAmount("");
   };
 
   return (
-    <div id="Convert" className="my-10 p-8 bg-gradient-to-br from-yellow-200 to-yellow-500 rounded-lg shadow-xl w-full max-w-md mx-auto text-white">
+    <div id="Convert" className="my-10 p-8 bg-gradient-to-br from-yellow-200 to-yellow-500 rounded-lg shadow-xl max-w-md mx-auto text-white">
       <h1 className="text-3xl font-bold mb-6 text-center">💱 Convertisseur de devises</h1>
 
       {/* Input Montant */}
@@ -55,7 +62,8 @@ function CurrencyConverter() {
           <input
             type="number"
             value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Entrez un montant"
             className="w-full p-3 border-none outline-none text-lg"
           />
           <select
@@ -94,8 +102,9 @@ function CurrencyConverter() {
         <div className="flex items-center border border-white rounded-lg overflow-hidden bg-white text-black">
           <input
             type="text"
-            value={convertedAmount.toFixed(3)}
+            value={convertedAmount}
             readOnly
+            placeholder="Résultat"
             className="w-full p-3 border-none outline-none text-lg bg-gray-100"
           />
           <select

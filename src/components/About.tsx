@@ -1,6 +1,6 @@
 import React from "react";
-import { ShieldCheck, DollarSign, Globe, Users} from "lucide-react";
-import GoogleMapComponent from "./Map";
+import { ShieldCheck, DollarSign, Users } from "lucide-react";
+import Image from "next/image";
 
 const About = () => {
   return (
@@ -12,23 +12,31 @@ const About = () => {
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-            À propos de <span className="text-yellow-500">Tarhouni Exchange</span>
+            À propos de{" "}
+            <span className="text-yellow-500">Tarhouni Exchange</span>
           </h2>
           <p className="mt-4 text-gray-700 max-w-2xl mx-auto">
-            Votre partenaire de confiance pour les services de change de devises en Tunisie.
-            Offrant des taux compétitifs et un service sécurisé pour toutes vos transactions.
+            Votre partenaire de confiance pour les services de change de devises
+            en Tunisie. Offrant des taux compétitifs et un service sécurisé pour
+            toutes vos transactions.
           </p>
         </div>
 
         {/* Content */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left: Image */}
-          <div className="relative rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-           <GoogleMapComponent/>
-          </div>
+      
+            <Image
+              src="/image/TarhouniBuraeu.jpg"
+              alt="Bureau Tarhouni"
+              width={250} // Remplace par la largeur correcte
+              height={250} // Remplace par la hauteur correcte
+              className="rounded-lg mx-auto"
+            />
+       
 
           {/* Right: Features */}
-          <div className="space-y-6">
+          <div className="grid gap-4">
             {features.map((feature, index) => (
               <div
                 key={index}
@@ -47,8 +55,6 @@ const About = () => {
             ))}
           </div>
         </div>
-
-
       </div>
     </section>
   );
@@ -57,23 +63,18 @@ const About = () => {
 // Features list
 const features = [
   {
-    title: "Sécurité et Fiabilité",
+    title: "Sécurité et Confidentialité ",
     description:
-      "Toutes vos transactions sont sécurisées avec des protocoles avancés pour protéger vos données.",
+      "La sécurité de vos transactions est notre priorité. Nous nous engageons à garantir la confidentialité de toutes vos opérations financières..",
     icon: <ShieldCheck className="w-6 h-6" />,
   },
   {
     title: "Meilleurs Taux",
     description:
-      "Nous offrons des taux compétitifs et mis à jour en temps réel pour garantir les meilleures offres.",
+      "Tarhouni Exchange offre les meilleurs taux de change du marché, notamment pour les gros montants .. et mis a jour en temps réel pour garantir les meilleurs offres.",
     icon: <DollarSign className="w-6 h-6" />,
   },
-  {
-    title: "Présence Internationale",
-    description:
-      "Un réseau mondial qui facilite les échanges de devises, peu importe où vous vous trouvez.",
-    icon: <Globe className="w-6 h-6" />,
-  },
+
   {
     title: "Service Client Dédié",
     description:

@@ -10,7 +10,7 @@ const ContactInfo = () => {
           Reach out to us for any questions or assistance. We are here to help you!
         </p>
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mx-6 mt-8">
           {/* Email */}
           <div className="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl">
             <Mail className="text-yellow-500 text-4xl mx-auto" />

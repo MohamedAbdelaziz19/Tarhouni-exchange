@@ -1,5 +1,5 @@
+//page.tsx
 "use client";
-
 import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import ErrorPage from "@/error";

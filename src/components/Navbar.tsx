@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import Link from 'next/link'
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -12,8 +13,8 @@ function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="#" className="flex items-center">
-              <span className="sr-only">Home</span>
+            <Link href="#" className="flex items-center">
+              
               <Image
                 src="/image/Tarhouni Logo Text PNG.png"
                 alt="Tarhouni Logo"
@@ -21,43 +22,43 @@ function Navbar() {
                 height={140}
                 className="object-contain"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
             <ul className="flex items-center gap-8 text-base font-medium">
               <li>
-                <a 
+                <Link 
                   href="#about"
                   className="text-gray-700 transition duration-200 ease-in-out hover:text-yellow-500"
                 >
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
+                <Link 
                   href="#service"
                   className="text-gray-700 transition duration-200 ease-in-out hover:text-yellow-500"
                 >
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
+                <Link 
                   href="#currencytable"
                   className="text-gray-700 transition duration-200 ease-in-out hover:text-yellow-500"
                 >
                   Cours de Change
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
+                <Link 
                   href="#contact"
                   className="text-gray-700 transition duration-200 ease-in-out hover:text-yellow-500"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

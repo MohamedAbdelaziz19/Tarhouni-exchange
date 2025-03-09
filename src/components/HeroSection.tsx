@@ -57,7 +57,7 @@ function HeroSection() {
             href="#Convert"
             className="inline-block rounded-full bg-yellow-500 px-8 py-3 text-sm font-medium text-white shadow-lg transition duration-300 ease-in-out hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-400"
           >
-            Change Votre Monais
+            Convertisseur de devises
           </a>
         </div>
       </div>
