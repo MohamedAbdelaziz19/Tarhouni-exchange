@@ -87,7 +87,7 @@ function CurrencyConverter() {
       {/* Input Montant */}
       <div className="mb-6">
         <label className="block text-lg font-semibold mb-2">
-          {isBuyingTND ? "Je donne" : "Je reçois"}
+          Je donne
         </label>
         <div className="flex items-center border border-white rounded-lg overflow-hidden bg-white text-black">
           <input
@@ -128,7 +128,7 @@ function CurrencyConverter() {
       {/* Résultat Conversion */}
       <div>
         <label className="block text-lg font-semibold mb-2">
-          {isBuyingTND ? "Je reçois en TND" : "Je donne"}
+          Je reçois 
         </label>
         <div className="flex items-center border border-white rounded-lg overflow-hidden bg-white text-black">
           <input
