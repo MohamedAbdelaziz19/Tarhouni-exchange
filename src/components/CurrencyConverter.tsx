@@ -10,6 +10,17 @@ function CurrencyConverter() {
   const [convertedAmount, setConvertedAmount] = useState(""); // Initialisation vide
   const [isBuyingTND, setIsBuyingTND] = useState(true); // Achat de TND par défaut
 
+  // Définition des unités spécifiques par devise
+  const currencyUnits: Record<string, number> = {
+    SAR: 10,
+    QAR: 10,
+    CHF: 10,
+    AED: 10,
+    NOK: 100,
+    DKK: 100,
+    JPY: 1000,
+  };
+
   // Récupération des taux de change
   useEffect(() => {
     const fetchCurrencies = async () => {
@@ -25,20 +36,40 @@ function CurrencyConverter() {
     fetchCurrencies();
   }, []);
 
-  // Conversion dynamique
-  useEffect(() => {
+  // Fonction de conversion
+  const convertCurrency = () => {
     if (amount === "" || isNaN(Number(amount))) {
-      setConvertedAmount(""); // Empêcher tout affichage de nombre
+      setConvertedAmount(""); // Empêcher tout affichage de nombre incorrect
       return;
     }
 
-    const fromRate = currencies.find((c) => c.code === fromCurrency)?.vent || 1;
-    const tndRate = currencies.find((c) => c.code === "TND")?.achat || 1;
+    const fromCurrencyData = currencies.find((c) => c.code === fromCurrency);
+    if (!fromCurrencyData) {
+      console.warn("Aucune donnée trouvée pour la devise :", fromCurrency);
+      return;
+    }
 
+    const fromAchat = fromCurrencyData.achat;
+    const fromVent = fromCurrencyData.vent;
+    const unit = currencyUnits[fromCurrency] || 1; // Unité spécifique ou 1 par défaut
+
+    let result = 0;
     if (isBuyingTND) {
-      setConvertedAmount(((Number(amount) * fromRate) / tndRate).toFixed(3));
+      // Achat TND
+      result = Number(amount) * (fromAchat / unit);
     } else {
-      setConvertedAmount(((Number(amount) * tndRate) / fromRate).toFixed(3));
+      // Vente TND
+      result = Number(amount) / (fromVent / unit);
+    }
+
+    console.log(`Montant entré: ${amount}, Résultat: ${result.toFixed(3)}`); // Debug
+    setConvertedAmount(result.toFixed(3));
+  };
+
+  // Mise à jour du calcul dès qu'une valeur change
+  useEffect(() => {
+    if (currencies.length > 0) {
+      convertCurrency();
     }
   }, [amount, fromCurrency, isBuyingTND, currencies]);
 

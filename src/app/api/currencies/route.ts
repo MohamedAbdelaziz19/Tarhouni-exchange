@@ -7,20 +7,24 @@ export async function GET() {
 
     await prisma.$connect();
     console.log("✅ Connexion Prisma réussie !");
-    // No need to manually connect in serverless environments
+    
+    // Récupérer toutes les devises
     const devises = await prisma.devise.findMany({
       orderBy: { createdAt: "desc" },
     });
 
+    console.log("Devises récupérées:", devises); // 🔥 Log pour vérifier les données récupérées
+
     return NextResponse.json(devises);
   } catch (error) {
-    console.error("❌ Erreur API /api/currencies :", error); // 🔥 Log for detailed error
+    console.error("❌ Erreur API /api/currencies :", error); // 🔥 Log pour erreur détaillée
     return NextResponse.json(
       { message: "Erreur lors de la récupération", error: error },
       { status: 500 }
     );
   }
 }
+
 
 export async function POST(req: Request) {
   try {
