@@ -27,9 +27,9 @@ const About = () => {
           {/* Left: Image */}
       
             <Image
-              src="/image/TarhouniBuraeu.jpg"
+              src="/image/TarhouniBuraeu.jpeg"
               alt="Bureau Tarhouni"
-              width={250} // Remplace par la largeur correcte
+              width={300} // Remplace par la largeur correcte
               height={250} // Remplace par la hauteur correcte
               className="rounded-lg mx-auto"
             />
