@@ -16,7 +16,6 @@ const saira = Saira({
   title: "Tarhouni Exchange | Meilleur taux de change en Tunisie",
   description: "Obtenez les meilleurs taux de change en Tunisie avec Tarhouni Exchange. Convertissez vos devises rapidement et en toute sécurité.",
   keywords: "taux de change, conversion devise, Tunisie, dinar tunisien, euro, dollar, change argent",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!),
   openGraph: {
     images: "/favicon-512x512.png",
   },
