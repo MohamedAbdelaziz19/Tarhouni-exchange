@@ -16,33 +16,11 @@ const saira = Saira({
   title: "Tarhouni Exchange | Meilleur taux de change en Tunisie",
   description: "Obtenez les meilleurs taux de change en Tunisie avec Tarhouni Exchange. Convertissez vos devises rapidement et en toute sécurité.",
   keywords: "taux de change, conversion devise, Tunisie, dinar tunisien, euro, dollar, change argent",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!),
   openGraph: {
-    title: "Tarhouni Exchange | Convertisseur de devises",
-    description: "Comparez les taux de change et convertissez vos devises facilement avec Tarhouni Exchange.",
-    url: "https://tarhouni-exchange.com",
-    siteName: "Tarhouni Exchange",
-    type: "website",
-    images: [
-      {
-        url: "/favicon-512x512.png", // Assurez-vous que cette image existe dans /public
-        width: 512,
-        height: 512,
-        alt: "Logo de Tarhouni Exchange",
-      },
-    ],
+    images: "/favicon-512x512.png",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Tarhouni Exchange",
-    description: "Découvrez les meilleurs taux de change et convertissez vos devises en quelques secondes.",
-    images: ["/favicon-512x512.png"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon-192x192.png",
-  },
-  manifest: "/site.webmanifest",
+ 
 };
 
 export default function RootLayout({
