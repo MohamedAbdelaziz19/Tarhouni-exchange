@@ -15,12 +15,28 @@ const saira = Saira({
  export const metadata: Metadata = {
   title: "Tarhouni Exchange | Meilleur taux de change en Tunisie",
   description: "Obtenez les meilleurs taux de change en Tunisie avec Tarhouni Exchange. Convertissez vos devises rapidement et en toute sécurité.",
-  keywords: "taux de change, conversion devise, Tunisie, dinar tunisien, euro, dollar, change argent",
-  openGraph: {
-    images: "/favicon-512x512.png",
+  keywords: "taux de change, Tunisie, devises, Tarhouni Exchange",
+  icons: {
+    icon: "/favicon.ico",
   },
- 
+  openGraph: {
+    title: "Tarhouni Exchange | Taux de change Tunisie",
+    description: "Les meilleurs taux de change en Tunisie, avec un service rapide et sécurisé.",
+    url: "http://tarhouni-exchange.com",
+    siteName: "Tarhouni Exchange",
+    images: [
+      {
+        url: "http://tarhouni-exchange.com/images/logo.png",
+        width: 800,
+        height: 600,
+        alt: "Tarhouni Exchange Logo",
+      },
+    ],
+    locale: "fr_FR",
+    type: "website",
+  },
 };
+
 
 export default function RootLayout({
   children,
