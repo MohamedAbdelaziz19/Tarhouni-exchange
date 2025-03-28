@@ -13,14 +13,15 @@ const saira = Saira({
  })
 
  export const metadata: Metadata = {
+  metadataBase: new URL("https://tarhouni-exchange.com/"),
   title:{
     default:"Tarhouni Exchange ",
     template:'%s | Meilleur taux de change en Tunisie'
   },
   description: "Obtenez les meilleurs taux de change en Tunisie avec Tarhouni Exchange. Convertissez vos devises rapidement et en toute sécurité.",
   keywords: "taux de change, Tunisie, devises, Tarhouni Exchange",
-  other: {
-    "google-site-verification": "4ywGfxBvev4knam6BU3zVuyPryLW8qfFfBN_ktakZaI",
+  verification: {
+    google: "4ywGfxBvev4knam6BU3zVuyPryLW8qfFfBN_ktakZaI", // Remplace avec ton code exact
   },
   icons: {
     icon: "/favicon.ico",

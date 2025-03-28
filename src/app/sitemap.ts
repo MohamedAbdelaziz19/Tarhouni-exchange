@@ -9,13 +9,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: "https://www.tarhouni-exchange.com/about",
+      url: "https://www.tarhouni-exchange.com/",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://www.tarhouni-exchange.com/contact",
+      url: "https://www.tarhouni-exchange.com/",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
