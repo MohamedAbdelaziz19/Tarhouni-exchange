@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
+export const dynamic = "force-dynamic"; // Empêche Next.js d'essayer d'exporter cette API
 
 export async function GET() {
   try {

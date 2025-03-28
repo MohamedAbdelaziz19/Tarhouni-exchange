@@ -4,11 +4,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   experimental: {
     forceSwcTransforms: true,
-    // Other experimental features can go here, but not `reactRefresh`
+    
+    // Autres fonctionnalités expérimentales
     serverActions: {
-      bodySizeLimit: '100mb', // Autorise jusqu'à 10 Mo
+      bodySizeLimit: '100mb', // Autorise jusqu'à 100 Mo
     },
-       
   },
 };
 
