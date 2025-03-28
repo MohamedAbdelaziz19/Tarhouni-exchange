@@ -27,13 +27,13 @@ const saira = Saira({
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: "Tarhouni Exchange | Taux de change Tunisie",
+    title: "Tarhouni Exchange | Les Meilleurs Taux de change Tunisie",
     description: "Les meilleurs taux de change en Tunisie, avec un service rapide et sécurisé.",
     url: "http://tarhouni-exchange.com",
     siteName: "Tarhouni Exchange",
     images: [
       {
-        url: "http://tarhouni-exchange.com/images/logo.png",
+        url: "http://tarhouni-exchange.com/images/opengraph-image",
         width: 800,
         height: 600,
         alt: "Tarhouni Exchange Logo",
