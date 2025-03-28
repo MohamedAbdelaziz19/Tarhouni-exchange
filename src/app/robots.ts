@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin"],
+        disallow: "/",
       },
     ],
     sitemap: "https://www.tarhouni-exchange.com/sitemap.xml",
